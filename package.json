@@ -21,14 +21,14 @@
   },
   "homepage": "https://github.com/YoshiyukiKato/grpc-mock#readme",
   "dependencies": {
-    "@grpc/proto-loader": "^0.3.0",
-    "grpc": "^1.17.0",
+    "@grpc/proto-loader": "^0.5.3",
+    "grpc": "^1.24.2",
     "grpc-kit": "^0.2.0",
     "partial-compare": "^1.0.1"
   },
   "devDependencies": {
     "intelli-espower-loader": "^1.0.1",
-    "mocha": "^5.2.0",
+    "mocha": "^6.2.2",
     "power-assert": "^1.6.1"
   }
 }

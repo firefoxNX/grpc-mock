@@ -1,6 +1,6 @@
 syntax="proto3";
 
-package greeter1;
+//package greeter1;
 
 service Greeter1 {
   rpc Hello1 (RequestGreet1) returns (ResponseGreet1) {}

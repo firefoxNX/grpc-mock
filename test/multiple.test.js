@@ -1,5 +1,5 @@
 const path = require("path");
-const assert =require("power-assert");
+const assert = require("power-assert");
 const {hello} = require("./fixture/greeter-client");
 const {hello1} = require("./fixture/greeter1-client");
 const {createMockServer} = require("../index");
@@ -12,22 +12,24 @@ const mockServer = createMockServer({
   packageName,
   serviceName,
   rules: [
-    { method: "hello", input: { message: "test" }, output: { message: "Hello" } }
+    {method: "hello", input: {message: "test"}, output: {message: "Hello"}}
   ]
 });
 
 describe("multiple proto files", () => {
   before(() => {
-    mockServer.use(protoPath1, "greeter1", "Greeter1",  [
-      { method: "hello1", input: { message: "test1" }, output: { message: "Hello1" } }
-    ]);
+    mockServer.use({
+      protoPath: protoPath1, packageName: "", serviceName: "Greeter1",
+      routes: [{method: "hello1", input: {message: "test1"}, output: {message: "Hello1"}}
+      ]
+    });
     mockServer.listen("0.0.0.0:50051");
   });
 
   afterEach(() => mockServer.clearInteractions());
 
   it("responds Hello", () => {
-    return hello({ message : "test" })
+    return hello({message: "test"})
       .then((res) => {
         assert(res.message === "Hello");
       })
@@ -35,7 +37,7 @@ describe("multiple proto files", () => {
   });
 
   it("responds Hello1", () => {
-    return hello1({ message : "test1" })
+    return hello1({message: "test1"})
       .then((res) => {
         assert(res.message === "Hello1");
       })

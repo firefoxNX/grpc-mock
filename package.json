@@ -22,6 +22,7 @@
   "homepage": "https://github.com/YoshiyukiKato/grpc-mock#readme",
   "dependencies": {
     "@grpc/proto-loader": "^0.5.3",
+    "google-protobuf": "^3.11.2",
     "grpc": "^1.24.2",
     "grpc-kit": "^0.2.0",
     "partial-compare": "^1.0.1"

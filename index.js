@@ -6,7 +6,21 @@ const UNEXPECTED_INPUT_PATTERN_ERROR = {
   message: "unexpected input pattern"
 };
 
-function createMockServer({ rules, ...config }) {
+let grpcServer;
+
+function createMockServer(multiOptions) {
+  grpcServer = createServer();
+  if(Array.isArray(multiOptions)) {
+    for (let i = 0; i < multiOptions.length; i++) {
+      createMockServerSingle(multiOptions[i]);
+    }
+  } else {
+    createMockServerSingle(multiOptions)
+  }
+  return grpcServer;
+}
+
+function createMockServerSingle({ rules, ...config }) {
   const routesFactory = rules.reduce((_routesFactory, { method, streamType, stream, input, output, error }) => {
     const handlerFactory = _routesFactory.getHandlerFactory(method)
       || _routesFactory.initHandlerFactory(method);
@@ -14,7 +28,6 @@ function createMockServer({ rules, ...config }) {
     return _routesFactory;
   }, new RoutesFactory());
   const routes = routesFactory.generateRoutes();
-  const grpcServer = createServer();
 
   grpcServer.getInteractionsOn = (method) => routes[method].interactions;
   grpcServer.clearInteractions = () => Object.keys(routes).forEach(method => routes[method].interactions.length = 0);
@@ -72,7 +85,7 @@ class HandlerFactory {
 
       /*
        * On each request handlers are generated for that request based on the
-       * defined rules. It is possible, if there are multiple rules for a 
+       * defined rules. It is possible, if there are multiple rules for a
        * method, that mutiple handlers will get generated and each will
        * attempt to process the incoming messages. This can lead to multiple
        * handlers attempting to respond and all sort of nastiness happens.
@@ -127,7 +140,7 @@ class HandlerFactory {
                   }
                 }, true);
                 const matched = included && memo.length === stream.length;
-  
+
                 if (matched) {
                   if (error) {
                     response.error = error;

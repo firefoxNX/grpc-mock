@@ -4,7 +4,7 @@ const {createClient} = require("grpc-kit");
 
 const client = createClient({
   protoPath: path.resolve(__dirname, "./greeter1.proto"),
-  // packageName: "greeter1",
+  packageName: "greeter1",
   serviceName: "Greeter1"
 }, "0.0.0.0:50051");
 

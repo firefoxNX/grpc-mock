@@ -69,9 +69,8 @@ const mockServer = createMockServer({
 });
 
 describe("grpc-mock", () => {
-  before((done) => {
+  before(() => {
     mockServer.listen("0.0.0.0:50051");
-    done();
   });
 
   afterEach(() => mockServer.clearInteractions());
@@ -80,24 +79,21 @@ describe("grpc-mock", () => {
     return hello({ message : "test" })
       .then((res) => {
         assert(res.message === "Hello");
-      })
-      .catch(assert);
+      });
   });
 
   it("responds Back at you", () => {
     return hello({ message : "Hi" })
       .then((res) => {
         assert(res.message === "Back at you");
-      })
-      .catch(assert);
+      });
   });
 
   it("responds Goodbye", () => {
     return goodbye({})
       .then((res) => {
         assert(res.message === "Goodbye");
-      })
-      .catch(assert);
+      });
   });
 
   it("throws unexpected input pattern error", () => {

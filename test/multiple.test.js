@@ -2,7 +2,7 @@ const path = require("path");
 const assert = require("power-assert");
 const {hello} = require("./fixture/greeter-client");
 const {promisify} = require("util");
-// const {hello1} = require("./fixture/greeter1-client");
+const {hello1} = require("./fixture/greeter1-client");
 const Greeter1Client = require('./fixture/greeter1_grpc_pb').Greeter1Client;
 const grpc = require('grpc');
 const greeterClient1 = new Greeter1Client("0.0.0.0:50051", grpc.credentials.createInsecure());
@@ -41,15 +41,22 @@ describe("multiple proto files", () => {
       .catch(assert);
   });
 
+  // it("responds Hello1", () => {
+  //   const requestGreet1 = new greeter1Messages.RequestGreet1();
+  //   requestGreet1.message = "test1";
+  //   const hello1promisify = promisify(greeterClient1.hello1);
+  //   return hello1promisify(requestGreet1)
+  //     .then((res) => {
+  //       assert(res.message === "Hello1");
+  //     })
+  //     .catch(assert);
+  // });
+
   it("responds Hello1", () => {
-    const requestGreet1 = new greeter1Messages.RequestGreet1();
-    requestGreet1.message = "test1";
-    const hello1promisify = promisify(greeterClient1.hello1);
-    return hello1promisify(requestGreet1)
+    return hello1({message: "test1"})
       .then((res) => {
         assert(res.message === "Hello1");
-      })
-      .catch(assert);
+      });
   });
 
   after(() => {

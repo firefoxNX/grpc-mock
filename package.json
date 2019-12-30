@@ -24,7 +24,7 @@
     "@grpc/proto-loader": "^0.5.3",
     "google-protobuf": "^3.11.2",
     "grpc": "^1.24.2",
-    "grpc-kit": "^0.2.0",
+    "grpc-kit": "git+https://github.com/firefoxNX/grpc-kit",
     "partial-compare": "^1.0.1"
   },
   "devDependencies": {
